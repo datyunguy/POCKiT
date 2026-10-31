@@ -1,0 +1,291 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Save Your Savings: keep every coupon until you use it</title>
+<meta name="description" content="Save Your Savings keeps your coupon codes in one place and reminds you before they expire. Try the early access demo and join the waitlist.">
+<meta property="og:title" content="Save Your Savings">
+<meta property="og:description" content="Keep every coupon in one place and use it before it expires. Early access demo.">
+<meta property="og:type" content="website">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;800&display=swap">
+
+<!-- ============================================================
+     TRACKING: paste your snippets here (inside <head>)
+     1. Google Analytics 4 "Google tag" snippet (Measurement ID G-XXXXXXXXXX)
+     2. Meta Pixel base code
+     The page works without them. Events below only fire if they exist.
+     ============================================================ -->
+
+<style>
+:root{
+  --paper:#F7F7F5; --card:#FFFFFF; --ink:#16160F; --mut:#5F5F58; --line:#E4E4DD;
+  --green:#21C46B; --green-deep:#0C7A3F; --green-wash:#E4F8EC;
+  --amber:#8A5A00; --amber-wash:#FFF3D1; --err:#B3332F;
+}
+@media (prefers-color-scheme:dark){
+  :root{--paper:#0F0F0D; --card:#1A1A17; --ink:#F4F4EF; --mut:#A7A7A0; --line:#2E2E2A;
+        --green-deep:#4BE08F; --green-wash:#12301F; --amber:#F5C04A; --amber-wash:#33280A; --err:#FF8C86}
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+body{margin:0;background:var(--paper);color:var(--ink);font:400 17px/1.55 Inter,system-ui,-apple-system,"Segoe UI",sans-serif}
+h1,h2,h3,p,ul,ol{margin:0}
+ul,ol{padding:0;list-style:none}
+a{color:inherit}
+:focus-visible{outline:3px solid var(--green);outline-offset:3px;border-radius:6px}
+.wrap{max-width:1040px;margin:0 auto;padding:0 20px}
+
+/* header */
+.top{padding:18px 0}
+.top .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px}
+.brand{display:flex;align-items:center;gap:10px;font-weight:800;letter-spacing:-.01em;text-decoration:none}
+.mark{width:34px;height:34px;border-radius:10px;background:var(--ink);color:var(--paper);display:grid;place-items:center;font-weight:800;font-size:16px}
+.top a.link{font-weight:600;font-size:15px}
+
+/* buttons */
+.btn{display:inline-block;border:1.5px solid var(--ink);background:var(--ink);color:var(--paper);border-radius:14px;padding:13px 22px;font:inherit;font-weight:700;text-decoration:none;cursor:pointer}
+.btn.green{background:var(--green);border-color:var(--green);color:#06210F}
+.btn.ghost{background:transparent;color:var(--ink)}
+.btn:disabled{opacity:.5;cursor:not-allowed}
+
+/* hero */
+.hero{padding:36px 0 72px}
+.hero .wrap{display:grid;gap:44px;align-items:center}
+@media (min-width:860px){.hero .wrap{grid-template-columns:1.1fr .9fr}}
+h1{font-size:clamp(38px,6.4vw,64px);font-weight:800;letter-spacing:-.035em;line-height:1.04}
+.lede{margin-top:20px;font-size:19px;color:var(--mut);max-width:34em}
+.cta{display:flex;flex-wrap:wrap;gap:12px;margin-top:28px}
+.tiny{margin-top:14px;font-size:14px;color:var(--mut)}
+
+/* coupon ticket (the one memorable element) */
+.ticket{position:relative;background:var(--card);border:1px solid var(--line);border-radius:22px;max-width:370px;width:100%;justify-self:center;transform:rotate(2.2deg);box-shadow:0 18px 40px -22px rgba(0,0,0,.35)}
+.t-top{padding:22px 22px 20px}
+.t-row{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.t-brand{display:flex;align-items:center;gap:10px;font-weight:600;color:var(--mut)}
+.t-logo{width:40px;height:40px;border-radius:12px;background:var(--ink);color:var(--paper);display:grid;place-items:center;font-weight:800}
+.chip{font-size:13px;font-weight:600;padding:3px 11px;border-radius:99px;background:var(--amber-wash);color:var(--amber);white-space:nowrap}
+.t-amt{font-size:44px;font-weight:800;letter-spacing:-.03em;line-height:1.05;margin-top:16px}
+.t-sub{color:var(--mut);font-size:15px}
+.perf{position:relative;border-top:2px dashed var(--line)}
+.perf::before,.perf::after{content:"";position:absolute;top:-12px;width:22px;height:22px;border-radius:50%;background:var(--paper);border:1px solid var(--line)}
+.perf::before{left:-12px;clip-path:inset(0 0 0 50%)}
+.perf::after{right:-12px;clip-path:inset(0 50% 0 0)}
+.t-bot{padding:16px 22px 20px;display:flex;align-items:center;justify-content:space-between;gap:10px}
+.code{font-family:ui-monospace,Menlo,Consolas,monospace;font-weight:600;letter-spacing:.06em;border:1.5px dashed var(--line);border-radius:10px;padding:6px 12px}
+.t-use{font-weight:700;font-size:15px;color:var(--green-deep)}
+.t-note{text-align:center;font-size:13px;color:var(--mut);margin-top:26px;transform:rotate(2.2deg)}
+
+/* sections */
+section{padding:64px 0;border-top:1px solid var(--line)}
+h2{font-size:clamp(28px,4.2vw,40px);font-weight:800;letter-spacing:-.025em;line-height:1.1;max-width:18em}
+.sec-intro{margin-top:14px;color:var(--mut);max-width:36em}
+
+.feat{margin-top:34px}
+.feat li{display:grid;gap:6px;padding:22px 0;border-top:1px solid var(--line)}
+.feat li:last-child{border-bottom:1px solid var(--line)}
+@media (min-width:760px){.feat li{grid-template-columns:.9fr 1.1fr;gap:32px}}
+h3{font-size:21px;font-weight:700;letter-spacing:-.01em;line-height:1.25}
+.feat p{color:var(--mut)}
+
+.steps{margin-top:34px;display:grid;gap:22px}
+@media (min-width:760px){.steps{grid-template-columns:repeat(3,1fr);gap:32px}}
+.steps li{counter-increment:s}
+.steps li::before{content:counter(s);display:grid;place-items:center;width:34px;height:34px;border-radius:50%;background:var(--green);color:#06210F;font-weight:800;margin-bottom:12px}
+.steps{counter-reset:s}
+.steps p{color:var(--mut);margin-top:4px}
+
+.demo{background:var(--card)}
+.demo .wrap{display:grid;gap:20px;align-items:center}
+@media (min-width:760px){.demo .wrap{grid-template-columns:1fr auto}}
+.demo p{color:var(--mut);max-width:34em;margin-top:10px}
+
+/* form */
+.signup{max-width:520px;margin-top:26px}
+label{display:block;font-weight:600;font-size:15px;margin-bottom:8px}
+.fr{display:flex;flex-wrap:wrap;gap:10px}
+input[type=email]{flex:1 1 240px;min-width:0;padding:13px 15px;border-radius:14px;border:1.5px solid var(--line);background:var(--card);color:var(--ink);font:inherit}
+.msg{min-height:24px;margin-top:10px;font-size:15px}
+.msg.ok{color:var(--green-deep);font-weight:600}
+.msg.bad{color:var(--err)}
+.fine{margin-top:10px;font-size:14px;color:var(--mut);max-width:34em}
+
+footer{padding:34px 0 48px;border-top:1px solid var(--line);color:var(--mut);font-size:14px}
+footer p+p{margin-top:8px}
+</style>
+</head>
+
+<body>
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="#top" id="top"><span class="mark" aria-hidden="true">S</span>Save Your Savings</a>
+    <a class="link" href="#waitlist">Join the waitlist</a>
+  </div>
+</header>
+
+<main>
+  <div class="hero">
+    <div class="wrap">
+      <div>
+        <h1>Never lose a coupon again</h1>
+        <p class="lede">Save Your Savings keeps your coupon codes in one place and reminds you before they expire, so the discount you found last month is still there when you check out.</p>
+        <div class="cta">
+          <a class="btn green" href="app.html" data-track="demo_click">Try the demo</a>
+          <a class="btn ghost" href="#waitlist" data-track="waitlist_jump">Join the waitlist</a>
+        </div>
+        <p class="tiny">Early access demo. No sign-up needed to look around.</p>
+      </div>
+
+      <div>
+        <div class="ticket" role="img" aria-label="Example of a saved coupon: 20 percent off, code SAVE20, expires in 3 days">
+          <div class="t-top">
+            <div class="t-row">
+              <span class="t-brand"><span class="t-logo" aria-hidden="true">S</span>Sample Store</span>
+              <span class="chip">Expires in 3 days</span>
+            </div>
+            <div class="t-amt">20% off</div>
+            <div class="t-sub">Orders over 1,500</div>
+          </div>
+          <div class="perf"></div>
+          <div class="t-bot">
+            <span class="code">SAVE20</span>
+            <span class="t-use">Use now</span>
+          </div>
+        </div>
+        <p class="t-note">Sample coupon for illustration</p>
+      </div>
+    </div>
+  </div>
+
+  <section aria-labelledby="why">
+    <div class="wrap">
+      <h2 id="why">Coupons get lost in screenshots, emails and chats</h2>
+      <p class="sec-intro">Save Your Savings gives every coupon a home, a deadline and a way to be used.</p>
+      <ul class="feat">
+        <li>
+          <h3>Keep every code in one place</h3>
+          <p>Paste a code and a link. For popular stores, the brand and category fill in for you, and you can add the minimum spend and terms.</p>
+        </li>
+        <li>
+          <h3>Get reminded before it expires</h3>
+          <p>Reminders arrive 7, 3 and 1 days before expiry, and on the day. The savings closest to expiring sit at the top of your list.</p>
+        </li>
+        <li>
+          <h3>Turn used savings into rewards</h3>
+          <p>Mark a coupon as used or exchange it for SaveCoins, then spend your coins on rewards. In this demo the rewards are simulated.</p>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <section aria-labelledby="how">
+    <div class="wrap">
+      <h2 id="how">How it works</h2>
+      <ol class="steps">
+        <li>
+          <h3>Save a coupon</h3>
+          <p>Add the code, the store link and the expiry date.</p>
+        </li>
+        <li>
+          <h3>See what is expiring</h3>
+          <p>Your wallet shows active, expiring soon and used savings.</p>
+        </li>
+        <li>
+          <h3>Use it or exchange it</h3>
+          <p>Open the store from the app, copy the code, then mark it as used.</p>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="demo" aria-labelledby="demo">
+    <div class="wrap">
+      <div>
+        <h2 id="demo">See it working in two minutes</h2>
+        <p>The demo runs in your browser. Use the demo account on the sign-in screen, add a coupon and check the rewards tab. Coupon codes shown are samples and SaveCoins have no cash value.</p>
+      </div>
+      <a class="btn green" href="app.html" data-track="demo_click">Open the demo</a>
+    </div>
+  </section>
+
+  <section id="waitlist" aria-labelledby="join">
+    <div class="wrap">
+      <h2 id="join">Get early access</h2>
+      <p class="sec-intro">Leave your email and we will tell you when the full version, with secure accounts and live reminders, is ready.</p>
+
+      <!-- ============================================================
+           EMAIL FORM
+           Option A (simplest): replace the <form> below with the embed code
+           from MailerLite or Brevo.
+           Option B: keep this form and put your provider's form action URL
+           in the action attribute. Field name may differ by provider
+           (for example "fields[email]" in MailerLite).
+           Until the action is replaced, the form shows a "not connected" message.
+           ============================================================ -->
+      <form class="signup" id="signup" action="PASTE_FORM_ACTION_URL_HERE" method="post" novalidate>
+        <label for="email">Email address</label>
+        <div class="fr">
+          <input type="email" id="email" name="email" autocomplete="email" inputmode="email" placeholder="you@example.com" required>
+          <button class="btn" type="submit">Join the waitlist</button>
+        </div>
+        <p class="msg" id="msg" role="status" aria-live="polite"></p>
+        <p class="fine">We use your email only to tell you when Save Your Savings launches. You can unsubscribe at any time.</p>
+      </form>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <p>Save Your Savings is an early access demo. Coupon codes shown are samples, SaveCoins have no cash value, and demo accounts are stored only in your browser.</p>
+    <p>Built by Rutvik Deshmane.</p>
+  </div>
+</footer>
+
+<script>
+(function(){
+  /* Send an event to GA4 and Meta, if those snippets are installed */
+  function track(name){
+    try{ if(typeof gtag==="function") gtag("event", name); }catch(e){}
+    try{
+      if(typeof fbq==="function"){
+        if(name==="waitlist_signup") fbq("track","Lead");
+        else fbq("trackCustom", name);
+      }
+    }catch(e){}
+  }
+
+  document.querySelectorAll("[data-track]").forEach(function(el){
+    el.addEventListener("click", function(){ track(el.getAttribute("data-track")); });
+  });
+
+  var form=document.getElementById("signup"),
+      email=document.getElementById("email"),
+      msg=document.getElementById("msg");
+
+  function say(text, cls){ msg.textContent=text; msg.className="msg "+(cls||""); }
+
+  form.addEventListener("submit", function(e){
+    var v=email.value.trim();
+    if(!/^\S+@\S+\.\S+$/.test(v)){
+      e.preventDefault();
+      say("Enter a valid email address, for example name@example.com.","bad");
+      email.focus();
+      return;
+    }
+    if(form.getAttribute("action").indexOf("PASTE_FORM_ACTION")===0){
+      e.preventDefault();
+      say("The signup form is not connected yet. Add your email provider's form link to this page.","bad");
+      return;
+    }
+    track("waitlist_signup");
+    say("Sending...","");
+  });
+})();
+</script>
+</body>
+</html>
